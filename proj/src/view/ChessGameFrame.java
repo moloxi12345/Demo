@@ -12,7 +12,7 @@ public class ChessGameFrame extends JFrame {
     //    public final Dimension FRAME_SIZE ;
     private final int WIDTH;
     private final int HEIGTH;
-
+    private static Image chess;
 
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS102A Project Demo"); //设置标题
@@ -24,20 +24,26 @@ public class ChessGameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
-
-
         addLabel();
         addHelloButton();
         addLoadButton();
         addzhuceButton();
         addzhutiButton();
+        addlable();
     }
 
 
     /**
      * 在游戏面板中添加棋盘
      */
-
+    private void addlable() {
+        JLabel jo = new JLabel();
+        jo.setSize(729, 729);
+        jo.setLocation(0, 0);
+        Image image;
+        jo.setIcon(new ImageIcon("C:\\Users\\86198\\IdeaProjects\\Demo\\images\\chan.png"));
+        add(jo);
+    }
 
     /**
      * 在游戏面板中添加标签
@@ -63,7 +69,7 @@ public class ChessGameFrame extends JFrame {
                     youxi1 youxiF = new youxi1(1000, 760);
                     youxiF.setVisible(true);
                 });
-                 dispose();
+                dispose();
             }
         });
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
@@ -81,7 +87,7 @@ public class ChessGameFrame extends JFrame {
 
         button.addActionListener(e -> {
             System.out.println("Click load");
-            String path = JOptionPane.showInputDialog(this,"Input Path here");
+            String path = JOptionPane.showInputDialog(this, "Input Path here");
         });
     }
 
@@ -94,6 +100,7 @@ public class ChessGameFrame extends JFrame {
 
 
     }
+
     private void addzhutiButton() {
         JButton button = new JButton("主题风格");
         button.setLocation(HEIGTH, HEIGTH / 10 + 480);
