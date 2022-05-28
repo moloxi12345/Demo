@@ -7,6 +7,8 @@ import controller.ClickController;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 /**
  * 这个类表示面板上的棋盘组件对象
@@ -159,5 +161,30 @@ public class Chessboard extends JComponent {
 
     public void loadGame(List<String> chessData) {
         chessData.forEach(System.out::println);
+        initiateEmptyChessboard();
+        if (Objects.equals(String.valueOf(chessData.get(8)).toLowerCase(Locale.ROOT), "w")) currentColor = ChessColor.WHITE;
+        else if (Objects.equals(String.valueOf(chessData.get(8)).toLowerCase(Locale.ROOT), "b")) currentColor = ChessColor.BLACK;
+//        else { //弹出窗口，说错误
+//
+//        }
+        for (int i = 0; i < chessData.size(); i++) {
+            for (int j = 0; j < chessData.get(i).length(); j++) {
+                switch (chessData.get(i).charAt(j)) {
+                    case 'B' -> initBishopOnBoard(i, j, ChessColor.BLACK);
+                    case 'K' -> initKingOnBoard(i, j, ChessColor.BLACK);
+                    case 'N' -> initKnightOnBoard(i, j, ChessColor.BLACK);
+                    case 'P' -> initPawnOnBoard(i, j, ChessColor.BLACK);
+                    case 'Q' -> initQueenOnBoard(i, j, ChessColor.BLACK);
+                    case 'R' -> initRookOnBoard(i, j, ChessColor.BLACK);
+                    case 'b' -> initBishopOnBoard(i, j, ChessColor.WHITE);
+                    case 'k' -> initKingOnBoard(i, j, ChessColor.WHITE);
+                    case 'n' -> initKnightOnBoard(i, j, ChessColor.WHITE);
+                    case 'p' -> initPawnOnBoard(i, j, ChessColor.WHITE);
+                    case 'q' -> initQueenOnBoard(i, j, ChessColor.WHITE);
+                    case 'r' -> initRookOnBoard(i, j, ChessColor.WHITE);
+                }
+            }
+        }
+        repaint();
     }
 }

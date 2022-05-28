@@ -1,5 +1,7 @@
 package view;
 
+import controller.GameController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,7 +43,7 @@ public class ChessGameFrame extends JFrame {
         jo.setSize(729, 729);
         jo.setLocation(0, 0);
         Image image;
-        jo.setIcon(new ImageIcon("C:\\Users\\86198\\IdeaProjects\\Demo\\images\\chan.png"));
+        jo.setIcon(new ImageIcon("C:\\Users\\九思而后行。\\IdeaProjects\\Demo\\images\\chan.png"));
         add(jo);
     }
 
@@ -86,9 +88,13 @@ public class ChessGameFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
-            System.out.println("Click load");
+            youxi1 youxiF = new youxi1(1000, 760);
             String path = JOptionPane.showInputDialog(this, "Input Path here");
+            youxiF.getGameController().loadGameFromFile(path);
+            youxiF.setVisible(true);
+            dispose();
         });
+
     }
 
     private void addzhuceButton() {

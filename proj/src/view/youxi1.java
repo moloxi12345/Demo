@@ -36,6 +36,7 @@ public class youxi1 extends JFrame {
     }
 
 
+
     /**
      * 在游戏面板中添加棋盘
      */
@@ -120,6 +121,10 @@ public class youxi1 extends JFrame {
         button.setSize(200, 60);
         //button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }
 
