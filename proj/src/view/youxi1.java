@@ -21,6 +21,7 @@ public class youxi1 extends JFrame {
     private GameController gameController;
     JLabel colorLabel;
 
+
     public youxi1(int width, int height) {
         setTitle("国际象棋"); //设置标题
         this.WIDTH = width;
@@ -32,23 +33,16 @@ public class youxi1 extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
+
         addColorLabel();
         addChessboard();
         addcundang();
         addhuiqi();
         addfanhui();
         addchongzhi();
-        addbeijing();
     }
 
-    //在游戏面板中添加背景图片
-    private void addbeijing(){
-        JLabel bei=new JLabel();
-        bei.setSize(1000,726);
-        bei.setLocation(0,0);
-        bei.setIcon(new ImageIcon("C:\\Users\\86198\\OneDrive - 南方科技大学\\文档\\GitHub\\Demo\\images\\67.jpg"));
-        add(bei);
-    }
+
     /**
      * 在游戏面板中添加棋盘
      */
@@ -89,6 +83,12 @@ public class youxi1 extends JFrame {
     //添加存档按钮
     private void addcundang() {
         JButton cundang = new JButton("存档");
+        cundang.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         cundang.setLocation(HEIGTH, HEIGTH / 10 + 240);
         cundang.setSize(200, 60);
         //button.setFont(new Font("Rockwell", Font.BOLD, 20));
@@ -105,14 +105,10 @@ public class youxi1 extends JFrame {
                     fileWriter.write(chessdata.get(i));
                 }
                 fileWriter.close();
-                SwingUtilities.invokeLater(() -> {
-                    ChessGameFrame mainF = new ChessGameFrame(1000, 760);
-                    mainF.setVisible(true);
-                });
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-
+            dispose();
         });
     }
 
@@ -149,13 +145,13 @@ public class youxi1 extends JFrame {
         button.setSize(200, 60);
         //button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
-
     }
+
     private void addColorLabel() {
         colorLabel = new JLabel("欢迎来到万宁国际象棋");
         colorLabel.setLocation(HEIGTH, HEIGTH / 10);
         colorLabel.setSize(200, 60);
-        colorLabel.setFont(new Font("伪宋", Font.BOLD, 20));
+        colorLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(colorLabel);
     }
 
