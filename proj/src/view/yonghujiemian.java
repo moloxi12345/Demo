@@ -100,6 +100,18 @@ public class yonghujiemian {
 
         public static void main(String[] args) throws Exception {
             new view.yonghujiemian().init();
+            String file="C:\\Users\\86198\\OneDrive - 南方科技大学\\文档\\GitHub\\Demo\\images\\吉森信 - ゆるやかな畦道で.mp3";
+            Play0 play = new Play0(file);
+            // 开启
+            play.start();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("stop!");
+
+
         }
 
     }
