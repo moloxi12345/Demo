@@ -1,9 +1,12 @@
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -13,6 +16,16 @@ public class ChessGameFrame extends JFrame {
     private final int WIDTH;
     private final int HEIGTH;
     private static Image chess;
+
+//
+//    //重写paint()，背景图片
+//    public void paint(Graphics g) {
+//        ImageIcon i = new ImageIcon(photo);
+//        i.setImage(photo.getScaledInstance(this.getWidth(), this.getHeight(),
+//                Image.SCALE_AREA_AVERAGING));            //此处是重点，通过this获取窗体大小来设置图片
+//        g.drawImage(i.getImage(), 0, 0, null);
+//    }
+
 
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS102A Project Demo"); //设置标题
@@ -29,30 +42,42 @@ public class ChessGameFrame extends JFrame {
         addLoadButton();
         addzhuceButton();
         addzhutiButton();
-        addlable();
+        //addlable();
+        addbeijing();
+
+    }
+
+
+    //在游戏面板中添加背景图片
+    private void addbeijing() {
+        JLabel bei = new JLabel();
+        bei.setSize(1000, 726);
+        bei.setLocation(0, 0);
+        bei.setIcon(new ImageIcon("C:\\Users\\86198\\OneDrive - 南方科技大学\\文档\\GitHub\\Demo\\images\\po.png"));
+        add(bei);
     }
 
 
     /**
      * 在游戏面板中添加棋盘
      */
-    private void addlable() {
-        JLabel jo = new JLabel();
-        jo.setSize(729, 729);
-        jo.setLocation(0, 0);
-        Image image;
-        jo.setIcon(new ImageIcon("C:\\Users\\86198\\IdeaProjects\\Demo\\images\\chan.png"));
-        add(jo);
-    }
+//    private void addlable() {
+//        JLabel jo = new JLabel();
+//        jo.setSize(729, 729);
+//        jo.setLocation(0, 0);
+//        jo.setIcon(new ImageIcon("C:\\Users\\86198\\IdeaProjects\\Demo\\images\\chan.png"));
+//        add(jo);
+//    }
 
     /**
      * 在游戏面板中添加标签
      */
     private void addLabel() {
-        JLabel statusLabel = new JLabel("Sample label");
-        statusLabel.setLocation(HEIGTH, HEIGTH / 10);
-        statusLabel.setSize(200, 60);
-        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        JLabel statusLabel = new JLabel("国际象棋");
+        statusLabel.setLocation(HEIGTH / 2 - 50, HEIGTH / 11);
+        statusLabel.setSize(2000, 100);
+        statusLabel.setFont(new Font("楷体", Font.BOLD, 90));
+        statusLabel.setForeground(Color.WHITE);
         add(statusLabel);
     }
 
@@ -72,17 +97,17 @@ public class ChessGameFrame extends JFrame {
                 dispose();
             }
         });
-        button.setLocation(HEIGTH, HEIGTH / 10 + 120);
+        button.setLocation(HEIGTH / 2, HEIGTH / 10 + 130);
         button.setSize(200, 60);
-        //button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setFont(new Font("仿宋", Font.BOLD, 20));
         add(button);
     }
 
     private void addLoadButton() {
         JButton button = new JButton("读档");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 240);
+        button.setLocation(HEIGTH / 2, HEIGTH / 10 + 250);
         button.setSize(200, 60);
-        //button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setFont(new Font("仿宋", Font.BOLD, 20));
         add(button);
 
         button.addActionListener(e -> {
@@ -93,19 +118,37 @@ public class ChessGameFrame extends JFrame {
 
     private void addzhuceButton() {
         JButton button = new JButton("用户信息");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 360);
+        button.setLocation(HEIGTH / 2, HEIGTH / 10 + 370);
         button.setSize(200, 60);
-        //button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setFont(new Font("仿宋", Font.BOLD, 20));
         add(button);
-
-
+       button.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               try {
+                   new yonghujiemian().init();
+               } catch (Exception ex) {
+                   ex.printStackTrace();
+               }
+           }
+       });
     }
 
     private void addzhutiButton() {
         JButton button = new JButton("主题风格");
-        button.setLocation(HEIGTH, HEIGTH / 10 + 480);
+        button.setLocation(HEIGTH / 2, HEIGTH / 10 + 490);
         button.setSize(200, 60);
-        //button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        button.setFont(new Font("仿宋", Font.BOLD, 20));
         add(button);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new zhuti().init();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 }

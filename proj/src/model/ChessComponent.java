@@ -22,10 +22,18 @@ public abstract class ChessComponent extends JComponent {
      */
 
 //    private static final Dimension CHESSGRID_SIZE = new Dimension(1080 / 4 * 3 / 8, 1080 / 4 * 3 / 8);
-    private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.BLACK};
-    /**
-     * handle click event
-     */
+
+
+    private final static   Color[] BACKGROUND_COLORS={Color.WHITE,Color.BLACK};
+            //* handle click event;
+    // */
+//    protected ChessComponent(Color[] BACKGROUND_COLORS){
+//        this.BACKGROUND_COLORS=BACKGROUND_COLORS;
+//
+//    }
+//    public void setBACKGROUND_COLORS(Color a,Color b){
+//        BACKGROUND_COLORS=new Color[]{a,b};
+//    }
     private ClickController clickController;
 
     /**
@@ -122,4 +130,5 @@ public abstract class ChessComponent extends JComponent {
         g.setColor(squareColor);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
+
 }

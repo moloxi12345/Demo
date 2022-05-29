@@ -33,9 +33,17 @@ public class youxi1 extends JFrame {
         addhuiqi();
         addfanhui();
         addchongzhi();
+        addbeijing();
     }
 
-
+    //在游戏面板中添加背景图片
+    private void addbeijing(){
+        JLabel bei=new JLabel();
+        bei.setSize(1000,726);
+        bei.setLocation(0,0);
+        bei.setIcon(new ImageIcon("C:\\Users\\86198\\OneDrive - 南方科技大学\\文档\\GitHub\\Demo\\images\\67.jpg"));
+        add(bei);
+    }
     /**
      * 在游戏面板中添加棋盘
      */
