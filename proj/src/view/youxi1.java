@@ -5,6 +5,10 @@ import controller.GameController;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 public class youxi1 extends JFrame {
     /**
@@ -34,7 +38,6 @@ public class youxi1 extends JFrame {
         addfanhui();
         addchongzhi();
     }
-
 
 
     /**
@@ -86,6 +89,23 @@ public class youxi1 extends JFrame {
         cundang.setSize(200, 60);
         //button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(cundang);
+        cundang.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser(".");
+            youxi1 you = new youxi1(1000, 760);
+            fileChooser.showSaveDialog(you);
+            File file = fileChooser.getSelectedFile();//获取用户选择的保存路径
+            try {
+                List<String> chessdata = gameController.cunDangGameAsFile();
+                FileWriter fileWriter = new FileWriter(file);//向文件写入
+                for (int i = 0; i < chessdata.size(); i++) {
+                    fileWriter.write(chessdata.get(i));
+                }
+                fileWriter.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            dispose();
+        });
     }
 
     //返回按钮

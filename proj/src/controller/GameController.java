@@ -25,4 +25,7 @@ public class GameController {
         return null;
     }
 
+    public List<String> cunDangGameAsFile() {
+        return chessboard.cunDangGame();
+    }
 }

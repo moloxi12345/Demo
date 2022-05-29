@@ -6,6 +6,8 @@ import controller.ClickController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -186,5 +188,31 @@ public class Chessboard extends JComponent {
             }
         }
         repaint();
+    }
+    public List<String> cunDangGame() {
+        ArrayList<String> chessData = new ArrayList<>();
+        for (int i = 0; i < chessComponents.length; i++) {
+            StringBuilder strBuffer = new StringBuilder();
+            for (int j = 0; j < chessComponents[i].length; j++) {
+                if (chessComponents[i][j] instanceof EmptySlotComponent) strBuffer.append('_');
+                if (chessComponents[i][j] instanceof BishopChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) strBuffer.append('B');
+                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) strBuffer.append('K');
+                if (chessComponents[i][j] instanceof KnightChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) strBuffer.append('N');
+                if (chessComponents[i][j] instanceof PawnChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) strBuffer.append('P');
+                if (chessComponents[i][j] instanceof QueenChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) strBuffer.append('Q');
+                if (chessComponents[i][j] instanceof RookChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK) strBuffer.append('R');
+                if (chessComponents[i][j] instanceof BishopChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) strBuffer.append('b');
+                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) strBuffer.append('k');
+                if (chessComponents[i][j] instanceof KnightChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) strBuffer.append('n');
+                if (chessComponents[i][j] instanceof PawnChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) strBuffer.append('p');
+                if (chessComponents[i][j] instanceof QueenChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) strBuffer.append('q');
+                if (chessComponents[i][j] instanceof RookChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE) strBuffer.append('r');
+            }
+            strBuffer.append("\n");
+            chessData.add(String.valueOf(strBuffer));
+        }
+        if (this.currentColor == ChessColor.WHITE) chessData.add(8, "w");
+        if (this.currentColor == ChessColor.BLACK) chessData.add(8, "b");
+        return chessData;
     }
 }
