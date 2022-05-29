@@ -3,6 +3,7 @@ package view;
 import controller.GameController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,6 +19,7 @@ public class youxi1 extends JFrame {
     private final int HEIGTH;
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
+    JLabel colorLabel;
 
 
     public youxi1(int width, int height) {
@@ -32,6 +34,7 @@ public class youxi1 extends JFrame {
         setLayout(null);
 
 
+        addColorLabel();
         addChessboard();
         addcundang();
         addhuiqi();
@@ -46,6 +49,7 @@ public class youxi1 extends JFrame {
     private void addChessboard() {
         Chessboard chessboard = new Chessboard(CHESSBOARD_SIZE, CHESSBOARD_SIZE);
         gameController = new GameController(chessboard);
+        chessboard.setColorLabel(colorLabel);
         chessboard.setLocation(HEIGTH / 10, HEIGTH / 10);
         add(chessboard);
     }
@@ -141,6 +145,22 @@ public class youxi1 extends JFrame {
         button.setSize(200, 60);
         //button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+    }
+
+    private void addColorLabel() {
+        colorLabel = new JLabel("欢迎来到万宁国际象棋");
+        colorLabel.setLocation(HEIGTH, HEIGTH / 10);
+        colorLabel.setSize(200, 60);
+        colorLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(colorLabel);
+    }
+
+    public JLabel getColorLabel() {
+        return colorLabel;
+    }
+
+    public void setColorLabel(JLabel colorLabel) {
+        this.colorLabel = colorLabel;
     }
 
     public GameController getGameController() {

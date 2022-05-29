@@ -34,6 +34,7 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
+    private JLabel colorLabel;
 
 
     public Chessboard(int width, int height) {
@@ -111,6 +112,7 @@ public class Chessboard extends JComponent {
 
     public void swapColor() {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
+        colorLabel.setText(String.valueOf(currentColor));
     }
 
     private void initPawnOnBoard(int row, int col, ChessColor color) {
@@ -214,5 +216,9 @@ public class Chessboard extends JComponent {
         if (this.currentColor == ChessColor.WHITE) chessData.add(8, "w");
         if (this.currentColor == ChessColor.BLACK) chessData.add(8, "b");
         return chessData;
+    }
+
+    public void setColorLabel(JLabel colorLabel) {
+        this.colorLabel = colorLabel;
     }
 }
