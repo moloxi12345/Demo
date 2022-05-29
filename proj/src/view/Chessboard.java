@@ -6,7 +6,11 @@ import controller.ClickController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 /**
  * 这个类表示面板上的棋盘组件对象
@@ -30,6 +34,7 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
+    private JLabel colorLabel;
 
 
     public Chessboard(int width, int height) {
@@ -107,6 +112,7 @@ public class Chessboard extends JComponent {
 
     public void swapColor() {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
+        colorLabel.setText(String.valueOf(currentColor));
     }
 
     private void initPawnOnBoard(int row, int col, ChessColor color) {
@@ -158,6 +164,98 @@ public class Chessboard extends JComponent {
     }
 
     public void loadGame(List<String> chessData) {
+        if (chessData.size() != 10)//读档检测
+            JOptionPane.showMessageDialog(this, "输入的棋盘并非 8*8", "你错误啦！", JOptionPane.WARNING_MESSAGE);
+        for (int i = 0; i < 8; i++) {
+            if (chessData.get(i).length() != 8) {
+                JOptionPane.showMessageDialog(this, "输入的棋盘并非 8*8", "你错误啦！", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < chessData.get(i).length(); j++) {
+                char chess = chessData.get(i).toLowerCase(Locale.ROOT).charAt(j);
+                if (chess != 'b' && chess != 'k' && chess != 'n' && chess != 'p' && chess != 'q' && chess != 'r' && chess != '_'){
+                    JOptionPane.showMessageDialog(this, "棋子并非六种之一，棋子并非黑白棋子", "你错误啦！", JOptionPane.WARNING_MESSAGE);//这里接下来每遇到一次都会出来一次？
+                }
+            }
+        }
+        if (!Objects.equals(chessData.get(8), "w") && !Objects.equals(chessData.get(8), "b")){
+            JOptionPane.showMessageDialog(this, "导入数据只有棋盘，没有下一步行棋的方的提示", "你错误啦！", JOptionPane.WARNING_MESSAGE);
+        }
+        if (!Objects.equals(chessData.get(9), "T") && !Objects.equals(chessData.get(8), "F")){
+            JOptionPane.showMessageDialog(this, "支持存储文件是 txt,你导入的是"+ chessData.get(9), "你错误啦！", JOptionPane.WARNING_MESSAGE);
+        }
+
         chessData.forEach(System.out::println);
+        initiateEmptyChessboard();
+        if (Objects.equals(String.valueOf(chessData.get(8)).toLowerCase(Locale.ROOT), "w"))
+            currentColor = ChessColor.WHITE;
+        else if (Objects.equals(String.valueOf(chessData.get(8)).toLowerCase(Locale.ROOT), "b"))
+            currentColor = ChessColor.BLACK;
+//        else { //弹出窗口，说错误
+//
+//        }
+        for (int i = 0; i < chessData.size(); i++) {
+            for (int j = 0; j < chessData.get(i).length(); j++) {
+                switch (chessData.get(i).charAt(j)) {
+                    case 'B' -> initBishopOnBoard(i, j, ChessColor.BLACK);
+                    case 'K' -> initKingOnBoard(i, j, ChessColor.BLACK);
+                    case 'N' -> initKnightOnBoard(i, j, ChessColor.BLACK);
+                    case 'P' -> initPawnOnBoard(i, j, ChessColor.BLACK);
+                    case 'Q' -> initQueenOnBoard(i, j, ChessColor.BLACK);
+                    case 'R' -> initRookOnBoard(i, j, ChessColor.BLACK);
+                    case 'b' -> initBishopOnBoard(i, j, ChessColor.WHITE);
+                    case 'k' -> initKingOnBoard(i, j, ChessColor.WHITE);
+                    case 'n' -> initKnightOnBoard(i, j, ChessColor.WHITE);
+                    case 'p' -> initPawnOnBoard(i, j, ChessColor.WHITE);
+                    case 'q' -> initQueenOnBoard(i, j, ChessColor.WHITE);
+                    case 'r' -> initRookOnBoard(i, j, ChessColor.WHITE);
+                }
+            }
+        }
+        repaint();
+    }
+
+    public List<String> cunDangGame() {
+        ArrayList<String> chessData = new ArrayList<>();
+        for (int i = 0; i < chessComponents.length; i++) {
+            StringBuilder strBuffer = new StringBuilder();
+            for (int j = 0; j < chessComponents[i].length; j++) {
+                if (chessComponents[i][j] instanceof EmptySlotComponent) strBuffer.append('_');
+                if (chessComponents[i][j] instanceof BishopChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK)
+                    strBuffer.append('B');
+                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK)
+                    strBuffer.append('K');
+                if (chessComponents[i][j] instanceof KnightChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK)
+                    strBuffer.append('N');
+                if (chessComponents[i][j] instanceof PawnChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK)
+                    strBuffer.append('P');
+                if (chessComponents[i][j] instanceof QueenChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK)
+                    strBuffer.append('Q');
+                if (chessComponents[i][j] instanceof RookChessComponent && chessComponents[i][j].getChessColor() == ChessColor.BLACK)
+                    strBuffer.append('R');
+                if (chessComponents[i][j] instanceof BishopChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE)
+                    strBuffer.append('b');
+                if (chessComponents[i][j] instanceof KingChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE)
+                    strBuffer.append('k');
+                if (chessComponents[i][j] instanceof KnightChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE)
+                    strBuffer.append('n');
+                if (chessComponents[i][j] instanceof PawnChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE)
+                    strBuffer.append('p');
+                if (chessComponents[i][j] instanceof QueenChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE)
+                    strBuffer.append('q');
+                if (chessComponents[i][j] instanceof RookChessComponent && chessComponents[i][j].getChessColor() == ChessColor.WHITE)
+                    strBuffer.append('r');
+            }
+            strBuffer.append("\n");
+            chessData.add(String.valueOf(strBuffer));
+        }
+        if (this.currentColor == ChessColor.WHITE) chessData.add(8, "w");
+        if (this.currentColor == ChessColor.BLACK) chessData.add(8, "b");
+        return chessData;
+    }
+
+    public void setColorLabel(JLabel colorLabel) {
+        this.colorLabel = colorLabel;
     }
 }

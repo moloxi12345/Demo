@@ -111,8 +111,13 @@ public class ChessGameFrame extends JFrame {
         add(button);
 
         button.addActionListener(e -> {
+            youxi1 youxiF= new youxi1(1000,760);
             System.out.println("Click load");
             String path = JOptionPane.showInputDialog(this, "Input Path here");
+            youxiF.getGameController().loadGameFromFile(path);
+            youxiF.setVisible(true);
+            dispose();
+
         });
     }
 

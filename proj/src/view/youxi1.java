@@ -3,8 +3,13 @@ package view;
 import controller.GameController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 public class youxi1 extends JFrame {
     /**
@@ -14,7 +19,7 @@ public class youxi1 extends JFrame {
     private final int HEIGTH;
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
-
+    JLabel colorLabel;
 
     public youxi1(int width, int height) {
         setTitle("国际象棋"); //设置标题
@@ -27,7 +32,7 @@ public class youxi1 extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
-
+        addColorLabel();
         addChessboard();
         addcundang();
         addhuiqi();
@@ -50,6 +55,7 @@ public class youxi1 extends JFrame {
     private void addChessboard() {
         Chessboard chessboard = new Chessboard(CHESSBOARD_SIZE, CHESSBOARD_SIZE);
         gameController = new GameController(chessboard);
+        chessboard.setColorLabel(colorLabel);
         chessboard.setLocation(HEIGTH / 10, HEIGTH / 10);
         add(chessboard);
     }
@@ -83,16 +89,31 @@ public class youxi1 extends JFrame {
     //添加存档按钮
     private void addcundang() {
         JButton cundang = new JButton("存档");
-        cundang.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
         cundang.setLocation(HEIGTH, HEIGTH / 10 + 240);
         cundang.setSize(200, 60);
         //button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(cundang);
+        cundang.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser(".");
+            youxi1 you = new youxi1(1000, 760);
+            fileChooser.showSaveDialog(you);
+            File file = fileChooser.getSelectedFile();//获取用户选择的保存路径
+            try {
+                List<String> chessdata = gameController.cunDangGameAsFile();
+                FileWriter fileWriter = new FileWriter(file);//向文件写入
+                for (int i = 0; i < chessdata.size(); i++) {
+                    fileWriter.write(chessdata.get(i));
+                }
+                fileWriter.close();
+                SwingUtilities.invokeLater(() -> {
+                    ChessGameFrame mainF = new ChessGameFrame(1000, 760);
+                    mainF.setVisible(true);
+                });
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        });
     }
 
     //返回按钮
@@ -128,6 +149,26 @@ public class youxi1 extends JFrame {
         button.setSize(200, 60);
         //button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+
+    }
+    private void addColorLabel() {
+        colorLabel = new JLabel("欢迎来到万宁国际象棋");
+        colorLabel.setLocation(HEIGTH, HEIGTH / 10);
+        colorLabel.setSize(200, 60);
+        colorLabel.setFont(new Font("伪宋", Font.BOLD, 20));
+        add(colorLabel);
+    }
+
+    public JLabel getColorLabel() {
+        return colorLabel;
+    }
+
+    public void setColorLabel(JLabel colorLabel) {
+        this.colorLabel = colorLabel;
+    }
+
+    public GameController getGameController() {
+        return gameController;
     }
 }
 
